@@ -6,7 +6,7 @@ class DirectorHarvester {
   }
 
   run() {
-    this._removeDeadHarvesters()
+    // this._removeDeadHarvesters()
     this._maintainHarvesters()
     this._runHarvesters()
   }
@@ -25,9 +25,13 @@ class DirectorHarvester {
   // private
 
   _runHarvesters() {
-    Memory.harvesters.forEach(function(name) {
+    Memory.harvesters.forEach(function(name, index) {
       var creep = Game.creeps[name];
-      harvester.run(creep);
+      if (creep) {
+        harvester.run(creep);
+      } else {
+        Memory.harvesters.splice(index, 1)
+      }
     })
   }
 
@@ -37,12 +41,13 @@ class DirectorHarvester {
     }
   }
 
-  _removeDeadHarvesters() {
-    _.remove(Memory.harvesters, function(name) {
-      !Game.creeps[name]
-    })
-  }
+  // _removeDeadHarvesters() {
+  //   _.remove(Memory.harvesters, function(name) {
+  //     !Game.creeps[name]
+  //   })
+  //
+  // }
 
 }
 
-module.exports = new DirectorHarvester();
+module.exports = DirectorHarvester
