@@ -1,20 +1,20 @@
 'use strict'
 
-require('./source')
+const RoomController = require('./room.controller')
 
-const DirectorHarvester = require('./director.harvester')
-const DirectorUpgrader  = require('./director.upgrader')
-
-global.directorHarvester = new DirectorHarvester()
-global.directorUpgrader  = new DirectorUpgrader()
+global.roomController = new RoomController()
 
 // const MAX_HARVESTERS = 2
 // const MAX_UPGRADERS  = 2
 
-module.exports.loop = function () {
-  if (!Memory.harvesters) Memory.harvesters = []
-  if (!Memory.upgraders) Memory.upgraders   = []
+let init = function() {
+  console.log('init called')
+  Memory.init           = 1
+  Memory.roomController = {}
+  // Memory.harvesters = []
+  // Memory.upgraders  = []
+}
 
-  directorHarvester.run()
-  directorUpgrader.run()
+module.exports.loop = function () {
+  if (!Memory.init) init()
 }

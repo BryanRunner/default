@@ -1,4 +1,4 @@
-var harvester = require('./role.harvester');
+const harvester = require('./role.harvester');
 
 class DirectorHarvester {
   constructor() {
@@ -6,7 +6,6 @@ class DirectorHarvester {
   }
 
   run() {
-    // this._removeDeadHarvesters()
     this._maintainHarvesters()
     this._runHarvesters()
   }
@@ -40,13 +39,6 @@ class DirectorHarvester {
       this.buildHarvester('Spawn1')
     }
   }
-
-  // _removeDeadHarvesters() {
-  //   _.remove(Memory.harvesters, function(name) {
-  //     !Game.creeps[name]
-  //   })
-  //
-  // }
 
 }
 
