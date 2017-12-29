@@ -6,9 +6,10 @@ const RoomDirector = require('./room.director')
 class RoomController {
   constructor() {
     console.log('initializing room controller')
-    this.roomDirectors    = []
-    this.memory           = Memory.roomController
-    this.memory.roomCount = 0
+    this.roomDirectors = []
+    this.roomCount     = 0
+    // this.memory           = Memory.roomController
+    // this.memory.roomCount = 0
     this.buildRoomDirectors()
   }
 
@@ -17,7 +18,7 @@ class RoomController {
       let room         = Game.rooms[name]
       let roomDirector = new RoomDirector(room)
       this.roomDirectors.push(roomDirector)
-      this.memory.roomCount++
+      this.roomCount++
     }
   }
 
