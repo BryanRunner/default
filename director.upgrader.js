@@ -6,6 +6,7 @@ class DirectorUpgrader {
   }
 
   run() {
+    this._removeDeadUpgraders()
     this._maintainUpgraders()
     this._runUpgraders()
   }
@@ -13,7 +14,7 @@ class DirectorUpgrader {
   buildUpgrader(spawn) {
     var body   = [WORK,CARRY,MOVE,MOVE],
         name   = `u${Memory.upgraders.length + 1}`,
-        memory = { memory: { role: 'upgrader', status: 0 } },
+        memory = { memory: { role: 'upgrader' } },
         spawn  = Game.spawns[spawn];
     if ( spawn.energy >= 300 && !spawn.spawning && Memory.harvesters.length >= 2 ) {
       spawn.spawnCreep(body, name, memory)
@@ -24,13 +25,9 @@ class DirectorUpgrader {
   // private
 
   _runUpgraders() {
-    Memory.upgraders.forEach(function(name, index){
+    Memory.upgraders.forEach(function(name){
       var creep = Game.creeps[name];
-      if (creep) {
-        upgrader.run(creep);
-      } else {
-        Memory.upgraders.splice(index, 1)
-      }
+      upgrader.run(creep)
     })
   }
 
@@ -40,6 +37,11 @@ class DirectorUpgrader {
     }
   }
 
+  _removeDeadUpgraders() {
+    _.remove(Memory.upgraders, function(name) {
+      !Game.creeps[name]
+    })
+  }
 }
 
-module.exports = DirectorUpgrader
+module.exports = new DirectorUpgrader();
